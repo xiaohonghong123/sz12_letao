@@ -35,7 +35,7 @@ li {
 
 /*顶部logo部分*/
 .lt_aside {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 180px;
@@ -123,6 +123,42 @@ li {
 .breadcrumb {
     margin-top: 30px;
 }
+
+
+
+/*用户管理部分 */
+.table.table-bordered {
+    margin-top: 20px;
+}
+.table.table-bordered td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.upload_box {
+    width: 85px;
+    height: 34px;
+    position: relative;
+}
+.upload_box button,
+.upload_box input {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.upload_box button {
+    z-index: 998;
+}
+.upload_box:hover button {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.upload_box input {
+    z-index: 999;
+    opacity: 0;
+}
+
 
 
 

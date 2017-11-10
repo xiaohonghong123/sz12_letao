@@ -18,7 +18,7 @@ $(function (){
             url:"/employee/checkRootLogin",
             success:function (data){
                 //console.log(data)
-                console.log(data.error);
+                //console.log(data.error);
                 if(data.error == 400){
                     location.href = "login.html";
                 }
@@ -40,10 +40,10 @@ $(function (){
 
     /*退出登录功能*/
     $(".btn_logout").on("click",function (){
-       $(".modal").modal('show');
+       $("#logoutModal").modal('show');
         //$('#myModal').modal('show')
     });
-    $(".btn_sure").on("click",function (){
+    $(".btn_confirm").on("click",function (){
         /*跳转到登录页*/
         $.ajax({
             url:"/employee/employeeLogout",

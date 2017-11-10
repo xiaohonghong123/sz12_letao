@@ -1,6 +1,4 @@
-/**
- * Created by z on 2017/11/8.
- */
+
 $(function (){
 
     //验证登录信
@@ -43,7 +41,7 @@ $(function (){
         }
     })
 
-    //校验成功实践
+    //校验成功事件
     $("form").on("success.form.bv",function (e){
        e.preventDefault();
         //console.log("heh");
