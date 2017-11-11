@@ -32,6 +32,8 @@ $(function (){
 //    弹出模态框
     $(".btn_add").on("click",function (){
         $("#add2Modal").modal("show");
+        //通过下拉 改变成校验成功
+
     //    点击的时候获取一级分类的数据
         $.ajax({
             url:"/category/queryTopCategoryPaging",
@@ -40,11 +42,12 @@ $(function (){
                 pageSize:100
             },
             success:function (data){
-                console.log(data);
+                //console.log(data);
                 $(".dropdown-menu").html(template("temp2",data));
             //    给生成的li 注册一个单击事件拿到 id  并显示在button的位子
 
                 $(".dropdown-menu").off().on("click","a",function (){
+                    $("form").data("bootstrapValidator").updateStatus("categoryId","VALID");
                     //console.log();
                     $(".dropdownText").text($(this).text());
                     $("#categoryId").val($(this).data("categoryid"));
@@ -63,6 +66,7 @@ $(function (){
             //console.log(data.result.picAddr);
             $("#upload_img").attr("src",data.result.picAddr);
             $("#brandLogo").val(data.result.picAddr);
+            $("form").data("bootstrapValidator").updateStatus("brandLogo","VALID");
         }
     });
 
@@ -102,8 +106,31 @@ $(function (){
     })
 
 //    校验成功  获取ajax  数据
-    $("#form").on("success.form.bv",function (){
-
+    $("#form").on("success.form.bv",function (e){
+        e.preventDefault();
+        $.ajax({
+            url:"/category/addSecondCategory",
+            type:"post",
+            data: $("#form").serialize(),
+            success:function (data){
+                console.log(data);
+                if(data.success){
+                    //关闭模态框
+                    $("#add2Modal").modal("hide");
+                //   初始化没模态框
+                    $("#form")[0].reset();
+                //    手动清除
+                    $("form").data("bootstrapValidator").resetForm();
+                    $("#categoryId").val("");
+                    $("#brandLogo").val("");
+                    $("#upload_img").attr("src","");
+                    $(".dropdownText").text("请选择一级分类");
+                //    重新渲染页面
+                    currentPage = 1;
+                    render();
+                }
+            }
+        })
     })
 
 })
