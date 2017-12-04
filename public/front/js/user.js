@@ -1,6 +1,4 @@
-/**
- * Created by HUCC on 2017/11/14.
- */
+
 $(function () {
 
   //发送ajax请求，获取个人信息

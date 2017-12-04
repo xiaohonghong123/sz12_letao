@@ -1,6 +1,4 @@
-/**
- * Created by HUCC on 2017/11/14.
- */
+
 $(function () {
 
   //1. 获取验证码

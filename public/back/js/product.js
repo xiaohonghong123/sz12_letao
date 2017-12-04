@@ -1,6 +1,4 @@
-/**
- * Created by HUCC on 2017/11/11.
- */
+
 $(function () {
 
   //分页渲染

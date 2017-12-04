@@ -1,6 +1,4 @@
-/**
- * Created by HUCC on 2017/11/11.
- */
+
 
 //区域滚动功能
 mui(".mui-scroll-wrapper").scroll({
