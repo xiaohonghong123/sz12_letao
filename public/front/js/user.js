@@ -11,14 +11,11 @@ $(function () {
       //如果没登录，跳转到登录页面
       tools.checkLogin(data);
 
-
       //渲染模板
       $(".userinfo").html( template("tpl", data) );
 
     }
   });
-
-
   //退出功能
   $(".lt_logout a").on("click", function () {
 

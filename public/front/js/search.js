@@ -8,6 +8,7 @@ $(function () {
   function getHistory() {
     //1. 先获取到localStorage的记录,如果获取时，发现没有这条记录，给一个默认值，就是空数组
     var history = localStorage.getItem("lt_search_history") || '[]';
+    
     //转换成数组，返回
     return JSON.parse(history);
   }

@@ -1,6 +1,3 @@
-/**
- * Created by HUCC on 2017/11/8.
- */
 
 //关闭进度环
 NProgress.configure({ showSpinner: false });
@@ -28,11 +25,6 @@ if(location.href.indexOf("login.html") == -1){
   });
 
 }
-
-//http无状态的
-
-
-
 
 //二级菜单显示隐藏
 $(".child").prev().on("click", function () {
