@@ -45,11 +45,14 @@ router.get("/deleteCart", function (req, res) {
 });
 router.get("/queryCart", checkUserLogin);
 router.get("/queryCart", function (req, res) {
+  console.log(req.session.user.id)
+  console.log("----------------------------------------")
   Cart.queryCart(req.session.user.id,  function (err, data) {
     if (err) return res.send({ "error": 403, "message": "数据库异常！" });
       if (data.length == 0) {
         return res.send(data);
       }
+      console.log(data.length+"length");
       var idStr = "";
       for (let i = 0; i < data.length; i++) {
         if (i == 0) {
@@ -60,14 +63,17 @@ router.get("/queryCart", function (req, res) {
         }
         data[i].pic = new Array();
       }
-      console.log(idStr);
+      console.log(idStr); 
+      idStr='1,2';
+      console.log(idStr); 
+      //'1,7,7,7,7,,7,2,2,2'
+      console.log("11111111111111111111111111111111");
       ProPic.queryPic(idStr, function (err, picData) {
         if (err) return res.send({ "error": 403, "message": "数据库异常！" });
         for (let l = 0; l < picData.length; l++) {
           for (let n = 0; n < data.length; n++)
             if (data[n].productId == picData[l].productId) {
               data[n].pic[data[n].pic.length] = picData[l];
-              console.log(picData[l]);
             }
         }
         res.send(data);

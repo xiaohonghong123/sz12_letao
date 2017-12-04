@@ -1,71 +1,79 @@
-$(function (){
-    /*生成进度条的效果*/
-//需要通过ajax的全局事件监听数据的提交情况
-//加载环  去掉
-    NProgress.configure({ showSpinner: false });
-    $(document).ajaxStart(function(){
-        NProgress.start();
-    });
-    $(document).ajaxStop(function (){
-        setInterval(function (){
-            NProgress.done();
-        },500);
-    });
+/**
+ * Created by HUCC on 2017/11/8.
+ */
 
-    //判断是否登录  如果登录继续访问 没有登录则 回到 登录页面
-    if(location.href.indexOf("login.html") == -1){
-        $.ajax({
-            url:"/employee/checkRootLogin",
-            success:function (data){
-                //console.log(data)
-                //console.log(data.error);
-                if(data.error == 400){
-                    location.href = "login.html";
-                }
-            }
-        })
+//关闭进度环
+NProgress.configure({ showSpinner: false });
+$(document).ajaxStart(function () {
+  NProgress.start();
+});
+$(document).ajaxStop(function () {
+  setTimeout(function () {
+    NProgress.done();
+  }, 500);
+});
+
+
+//页面一加载，先发送一个判断用户是否登录的请求，如果登录，不做任何的使用，如果没登录，跳转到登录页面。
+//非登陆页发送这个ajax请求
+if(location.href.indexOf("login.html") == -1){
+  $.ajax({
+    type:"get",
+    url:"/employee/checkRootLogin",
+    success:function (data) {
+      if(data.error === 400){
+        location.href = "login.html";
+      }
     }
+  });
 
-    //首页部分  点击侧边栏  是否显示一 二级分类
-    $(".fenlei").on("click",function (){
-        $(this).next().slideToggle();
-    })
+}
 
-
-    /*侧边栏的显示和隐藏*/
-    $(".btn_menu").on("click",function (){
-        $(".lt_aside").toggleClass("aside_left");
-        $(".lt_main").toggleClass("main_left");
-    })
-
-    /*退出登录功能*/
-    $(".btn_logout").on("click",function (){
-       $("#logoutModal").modal('show');
-        //$('#myModal').modal('show')
-    });
-    $(".btn_confirm").on("click",function (){
-        /*跳转到登录页*/
-        $.ajax({
-            url:"/employee/employeeLogout",
-            success:function (data){
-                if(data.success){
-                    location.href = "login.html";
-                }
-            }
-        })
-    });
+//http无状态的
 
 
 
 
+//二级菜单显示隐藏
+$(".child").prev().on("click", function () {
+  $(this).next().slideToggle();
+});
 
 
+//侧边栏显示隐藏
+$(".btn_menu").on("click",function () {
 
-
+  $(".lt_aside").toggleClass("now");
+  $(".lt_main").toggleClass("now");
+  $(".topbar").toggleClass("now");
 
 });
 
 
+//退出功能
+$(".btn_logout").on("click", function () {
+  $("#logoutModal").modal("show");
 
+
+  //on注册事件不会覆盖
+  //off()解绑所有的事件
+  //off("click") 只解绑click事件
+  //off("click", "**"); 解绑委托事件
+  $(".btn_confirm").off().on("click", function () {
+
+    //给服务器发送ajax请求，让服务器清除session
+    $.ajax({
+      type:"get",
+      url:"/employee/employeeLogout",
+      success:function (data) {
+
+        if(data.success){
+          location.href = "login.html";
+        }
+      }
+    });
+
+  });
+});
 
 

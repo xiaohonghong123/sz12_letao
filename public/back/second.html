@@ -79,21 +79,11 @@
         </thead>
         <tbody>
         <!--挖个坑-->
-     <!--   <tr>
-          <td >序号</td>
-          <td>一级分类名称</td>
-          <td>二级分类名称</td>
-          <td>
-            <img src="./images/none.png" alt=""/>
-          </td>
-        </tr>-->
         </tbody>
       </table>
 
       <div class="text-right">
-        <ul id="paginator">
-
-        </ul>
+        <ul id="paginator"></ul>
       </div>
     </div>
   </div>
@@ -122,8 +112,8 @@
   </div>
 </div>
 
-<!--二级分类 添加的模态框-->
-<div class="modal fade" tabindex="-1" id="add2Modal">
+
+<div class="modal fade" tabindex="-1" id="addModal">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -131,19 +121,17 @@
         <h4 class="modal-title">添加分类</h4>
       </div>
       <div class="modal-body">
-        <form action="" id="form">
+        <form id="form">
           <div class="form-group">
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                <span class="dropdownText">请选择一级分类</span>
+                <span class="dropdown-text">请选择一级分类</span>
                 <span class="caret"></span>
+                <input type="hidden" id="categoryId" name="categoryId">
               </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <!--<li><a href="#">高跟鞋</a></li>-->
-               <!-- 挖坑-->
+              <ul class="dropdown-menu">
+                <!--挖个坑-->
               </ul>
-              <!-- 用一个隐藏的input  来保存id-->
-              <input type="hidden" id="categoryId" name="categoryId"/>
             </div>
           </div>
           <div class="form-group">
@@ -158,64 +146,49 @@
                 3. 必须data-url：指定图片上传的地址
               -->
               <input type="file" id="fileupload" name="pic1" data-url="/category/addSecondCategoryPic" class="btn btn-default">
-              <!-- 图片地址 用隐藏域存起来 -->
-              <input type="hidden" id="brandLogo" name="brandLogo"/>
             </div>
           </div>
-          <div class="form-group">
-            <img id="upload_img" src="./images/none.png" width="100" height="100" alt=""/>
+          <div class="form-group img_box">
+            <img src="images/none.png" width="100" height="100" alt="">
+            <input type="hidden" name="brandLogo" id="brandLogo">
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="submit" form="form" class="btn btn-primary btn_secon">确定</button>
+        <button type="button" form="form" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="submit" form="form" class="btn btn-primary btn_confirm">确定</button>
       </div>
     </div>
   </div>
 </div>
 
+<script type="text/html" id="tpl">
+  {{each rows v i}}
+  <tr>
+    <td>{{(page-1)*size+i+1}}</td>
+    <td>{{v.categoryName}}</td>
+    <td>{{v.brandName}}</td>
+    <td><img src="{{v.brandLogo?v.brandLogo:'images/none.png'}}" width="50" height="50" alt=""></td>
+  </tr>
+  {{/each}}
+</script>
 
+<script type="text/html" id="tpl2">
+  {{each rows v i}}
+  <li><a href="javascript:;" data-id="{{v.id}}">{{v.categoryName}}</a></li>
+  {{/each}}
+</script>
 
 <script src="lib/jquery/jquery.min.js"></script>
-<!--bootstrap 框架-->
-<script src="lib/bootstrap/js/bootstrap.min.js"></script>
-<!--表单校验-->
-<script src="lib/bootstrap-validator/js/bootstrapValidator.min.js"></script>
-<!--分页-->
-<script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
-<!-- 进度条 -->
-<script src="lib/nprogress/nprogress.js"></script>
-<!-- 模板引擎 -->
-<script src="lib/art-template/template-web.js"></script>
-<!--使用 上传照片插件-->
 <script src="lib/jquery-fileupload/jquery.ui.widget.js"></script>
 <script src="lib/jquery-fileupload/jquery.fileupload.js"></script>
-
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-validator/js/bootstrapValidator.min.js"></script>
+<script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
+<script src="lib/nprogress/nprogress.js"></script>
+<script src="lib/echarts/echarts.min.js"></script>
+<script src="lib/artTemplate/template-web.js"></script>
 <script src="js/common.js"></script>
 <script src="js/second.js"></script>
-
-<!--模板部分==========================================-->
-<script type="text/html" id = temp1>
-  {{each rows v i}}
-    <tr>
-      <td>{{(page-1)*size+1 + i}}</td>
-      <td>{{v.categoryName}}</td>
-      <td>{{v.brandName}}</td>
-      <td>
-        <img width="50" height="50" src="{{v.brandLogo?v.brandLogo:'./images/none.png'}}" alt=""/>
-      </td>
-    </tr>
-  {{/each}}
-</script>
-
-<!--生成下拉框-->
-<script type="text/html" id="temp2">
-  {{each rows v i}}
-  <li><a data-categoryid="{{v.id}}"  href="javascript:;">{{v.categoryName}}</a></li>
-  {{/each}}
-</script>
-
-<!--模板部分==========================================-->
 </body>
 </html>
